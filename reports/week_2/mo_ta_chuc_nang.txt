@@ -1,0 +1,61 @@
+MÔ TẢ CÁC VAI TRÒ: 
+- Người dùng
+Có 3 vai trò người dùng trong 1 Project: 
+- Admin (Người tạo Project) (Toàn quyền) (Có mọi chức năng MOD + Member)
+- Mod (Người được Admin phân để tạo và quản lý Task) (Chỉ có thể tạo và quản lý các Task chính mình THÊM) (Có mọi
+- Member (Thành viên trong Task)
+
+--------------------------------------------
+- Các chức năng cơ bản :
++ đang nhập 
++ đăng kí
++ quên mật khẩu
++ chỉnh sửa thông tin cá nhân, upload ảnh đại diện
++ Tạo 1 đồ án (trở thành Admin của đồ án đó)
+
+Ở vai trò Member trong 1 đồ án:
+- Nhập Task để làm
+- Yêu cầu duyệt hủy Task (Để hủy không làm Task nào đó nữa, nhưng cần phải có Ad hoặc Mod tạo ra Task đó duyệt)
+- Bình Luận Trong 1 Task (để góp ý, báo lỗi, ...)
+	+ Khi bình luận, sẽ có thông báo gửi đến người đang nhận Task và người tạo ra Task
+- Khi làm xong Task, sẽ yêu cầu Người tạo ra Task hoặc Ad duyệt là đã hoàn thành 
+	+ Tạo thông báo đến người tạo ra Task và Admin
+- Rời khỏi Project: 
+	+ các task đã nhận chưa hoàn thành sẽ bị xóa
+	+ Gửi thông báo đến Admin và người tạo ra task : Member này đã out Task
+	+ Các Task đã hoàn thành thì vẫn giữ thành viên này.
+
+
+Ở vai trò Mod (Quyền trong Task mình tạo ra)(Có thể tạo và quản lý các Task của mình tạo ra):
+- Có mọi chức năng của member
+- Duyệt hoàn thành hoặc từ chối duyệt cho thành viên
+- Sửa Task :
+	+ Thêm vào lịch sử sửa Task
+- Xóa 1 task
+- Xóa thành viên nhận Task đó
+- Có thể chỉ định người nhận Task
+
+
+
+Ở vai trò Admin (Thêm và quản lý đồ án của mình):
+- Có mọi chức năng của MOD, MEMBER
+- Sửa đồ án 
+- Set Trạng Thái đã hoàn thành cho đồ án
+- Xóa đồ án
+	+ xác thực khó để tránh nhầm lẫn
+- Thêm thành viên vô nhóm
+- Xóa thành viên khỏi nhóm
+- Phân quyền cho thành viên (làm mod hoặc member)
+- Chuyển nhượng quyền Admin
+
+
+Phần Thống Kê:
+- Thống Kê Mod nào đã ra task nào (trạng thái Task đó ra sao (đã sửa, đã xóa, đã hoàn thành))
+- Số Task đã hoàn thành của mõi người, đã làm và hủy những Task nào
+- Thống kê thành viên có số lượng Task làm nhiều nhất, số lượng hủy Task nhiều nhất
+
+
+Chức năng khác:
+- Thông báo khi có Task, Project gần đến hạn
+
+
