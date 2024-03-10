@@ -56,7 +56,7 @@ registerRoutes(path.join(__dirname, 'features'),app);
 
 
 //Celebrate error handling
-app.use(require('./middlewares/validationError'));
+app.use(require('./middlewares/validationError')); 
 
 //error 404
 const Result = require('./utils/result');

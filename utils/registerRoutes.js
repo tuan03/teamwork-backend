@@ -14,7 +14,7 @@ const registerRoutes = (directory, app, prefix = "") => {
     } else if (file === "route.js") {
       const routePath = path.join(prefix, path.parse(file).name);
       const route = require(filePath);
-      app.use("/api", route);
+      app.use(`/api/${prefix}`, route);
       if (logRoutes) {
         console.log("=======Route=======");
         console.log(`Route    \"${routePath}\"    is registered`);

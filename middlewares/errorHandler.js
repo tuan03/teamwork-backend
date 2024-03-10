@@ -7,7 +7,7 @@ const errorHandler = (err, req, res, next) => {
   } else {
     console.log(err)
     res.status(500).json(Result.error(statusErrors.INTERNAL_SERVER_ERROR,err.message));
-  }    
+  }     
   };
   
   module.exports = errorHandler;
