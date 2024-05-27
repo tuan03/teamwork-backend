@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Upload</title>
+</head>
+<body>
+  <h1>Image Upload</h1>
+  <form id="uploadForm" action="http://localhost:3000/api/users/changeAvatar" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" accept="image/*">
+    <button type="submit">Upload</button>
+  </form>
+
+  <div id="imageContainer"></div>
+
+  <script>
+    // Xử lý khi form được gửi đi
+    document.getElementById('uploadForm').addEventListener('submit', async (event) => {
+      event.preventDefault(); // Ngăn chặn hành động mặc định của form
+      const formData = new FormData(event.target); // Tạo đối tượng FormData từ form
+      try {
+        const response = await fetch('http://localhost:3000/api/users/changeAvatar', {
+          method: 'POST',
+          body: formData
+        });
+        if (response.ok) {
+          const imageUrl = await response.text(); // Nhận URL của hình ảnh từ phản hồi
+          document.getElementById('imageContainer').innerHTML = `<img src="${imageUrl}" alt="Uploaded Image">`;
+        } else {
+          console.error('Failed to upload image');
+        }
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    });
+  </script>
+</body>
+</html>

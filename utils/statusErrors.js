@@ -19,7 +19,16 @@ const statusErrors = {
     message: "Internal Server Error",
     status_code: 500,
   },
+  DATA_CONFLICT : {
+    message: "Conflict",
+    status_code: 409,
+  },
+  REQUEST_TIMEOUT :{
+    message:"Request Timeout",
+    status_code: 408,
+  }
   // Thêm các loại lỗi khác nếu cần thiết
 };
 
 module.exports = { statusErrors };
+
