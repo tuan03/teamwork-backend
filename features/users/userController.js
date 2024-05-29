@@ -29,13 +29,27 @@ async function registerUser(req, res,next) {
 async function loginUser(req, res,next) {
     try {
         if(isValidEmail(req.body.Username)){
-            const newUser = await userModel.findOne({ where: { Email: req.body.Username, PasswordHash: req.body.PasswordHash } });
-            req.session.UserID = newUser.UserID;
-            res.status(200).json(Result.success(200));
+            const user = await userModel.findOne({ where: { Email: req.body.Username, PasswordHash: req.body.PasswordHash } });
+            req.session.UserID = user.UserID;
+            res.status(200).json(Result.success(200,{
+                UserID: user.UserID,
+                FullName: user.FullName,
+                BirthDay: user.BirthDay,
+                Email: user.Email,
+                Information: user.Information,
+                Avatar: user.Avatar
+            }));
         } else {
-            const newUser = await userModel.findOne({ where: { UserName: req.body.Username, PasswordHash: req.body.PasswordHash } });
-            req.session.UserID = newUser.UserID;
-            res.status(200).json(Result.success(200));
+            const user = await userModel.findOne({ where: { UserName: req.body.Username, PasswordHash: req.body.PasswordHash } });
+            req.session.UserID = user.UserID;
+            res.status(200).json(Result.success(200, {
+                UserID: user.UserID,
+                FullName: user.FullName,
+                BirthDay: user.BirthDay,
+                Email: user.Email,
+                Information: user.Information,
+                Avatar: user.Avatar
+            }));
         }
     } catch (error) {
         next(Result.error(statusErrors.UNAUTHORIZED))
