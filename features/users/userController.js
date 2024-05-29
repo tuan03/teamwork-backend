@@ -5,7 +5,7 @@ const {statusErrors} = require('../../utils/statusErrors')
 const isValidEmail = require('../../utils/checkEmail');
 const generateRandomNumber = require('../../utils/generateRandomNumber');
 const sendEmail = require('../../utils/sendEmail');
-const crypto = require('crypto');
+const hash = require('../../utils/generateMD5Hash');
 
 async function checkLogin(req,res,next){
     res.json(Result.success(204,null,"Đã xác thực người dùng"))
@@ -15,7 +15,16 @@ async function checkLogin(req,res,next){
 async function registerUser(req, res,next) {
     try {
         // Create a new user using userModel
-        const newUser = await userModel.create(req.body);
+        const newUser = await userModel.create({
+            Username: req.body.Username,
+            FullName: req.body.FullName,
+            PasswordHash: req.body.PasswordHash,
+            // hash(req.body.PasswordHash),
+            BirthDay: req.body.BirthDay,
+            Email: req.body.Email,
+            Information: req.body.Information,
+            Avatar: req.body.Avatar
+        });
         req.session.UserID = newUser.UserID;
         
         res.status(201).json(Result.success(201));
@@ -29,7 +38,9 @@ async function registerUser(req, res,next) {
 // Function for user login
 async function loginUser(req, res,next) {
     try {
+        console.log(hash(req.body.PasswordHash))
         if(isValidEmail(req.body.Username)){
+            // hash(req.body.PasswordHash)
             const user = await userModel.findOne({ where: { Email: req.body.Username, PasswordHash: req.body.PasswordHash } });
             req.session.UserID = user.UserID;
             res.status(200).json(Result.success(200,{
@@ -41,7 +52,7 @@ async function loginUser(req, res,next) {
                 Avatar: process.env.DOMAIN +"/"+ user.Avatar
             }));
         } else {
-            const user = await userModel.findOne({ where: { UserName: req.body.Username, PasswordHash: req.body.PasswordHash } });
+            const user = await userModel.findOne({ where: { UserName: req.body.Username, PasswordHash: req.body.PasswordHash     } });
             req.session.UserID = user.UserID;
             res.status(200).json(Result.success(200, {
                 UserID: user.UserID,

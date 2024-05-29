@@ -20,13 +20,26 @@ async function createProject(req, res, next) {
 
 async function getAllProjects(req, res, next) {
   try {
+    
     const projects = await Project.findAll({
       include: [{
         model: Member,
-        where: { UserID: req.userID }, // Lọc các dự án theo người dùng
+        where: { UserID: req.userID },
       }],
-    });
-    res.status(200).json(Result.success(200, projects));
+         });
+        const convertData = projects.map((project) => {
+          const newProject = {
+            ProjectID: project.ProjectID,
+            ProjectName: project.ProjectName,
+            ProjectDescription: project.ProjectDescription,
+            Deadline: project.Deadline,
+            Status: project.Status,
+            CreatedAt: project.CreatedAt,
+            Role: project.Members[0].Role,
+          }
+          return newProject;
+        })
+    res.status(200).json(Result.success(200, convertData));
   }  catch (error) {
     console.log(error)
     next(error);
