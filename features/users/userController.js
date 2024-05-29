@@ -5,6 +5,7 @@ const {statusErrors} = require('../../utils/statusErrors')
 const isValidEmail = require('../../utils/checkEmail');
 const generateRandomNumber = require('../../utils/generateRandomNumber');
 const sendEmail = require('../../utils/sendEmail');
+const crypto = require('crypto');
 
 async function checkLogin(req,res,next){
     res.json(Result.success(204,null,"Đã xác thực người dùng"))
