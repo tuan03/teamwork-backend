@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      const uploadDir = path.join(__dirname, '..', 'uploads', 'img'); // Sử dụng đường dẫn tuyệt đối
+      const uploadDir = path.join(__dirname, '..', 'uploads', 'img','avatar'); // Sử dụng đường dẫn tuyệt đối
       // Kiểm tra xem thư mục uploads có tồn tại không
       if (!fs.existsSync(uploadDir)) {
         // Nếu không tồn tại, tạo thư mục

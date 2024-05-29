@@ -215,8 +215,7 @@ async function changeAvatar(req, res, next) {
                 },
                 {
                     where: {
-                        UserID: 1
-                        //req.session.UserID
+                        UserID: req.userID
                     }
                 }
             );
