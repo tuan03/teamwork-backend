@@ -13,10 +13,6 @@ router.post('/', createNotificationValidation, notificationController.createNoti
 // Get notifications for a user
 router.get('/:userId', notificationController.getNotifications);
 
-// Mark a notification as read
-router.put('/:id/mark-as-read', markAsReadValidation, notificationController.markAsRead);
 
-// Delete a notification
-router.delete('/:id', deleteNotificationValidation, notificationController.deleteNotification);
 
 module.exports = router;

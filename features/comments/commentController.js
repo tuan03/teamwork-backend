@@ -7,8 +7,8 @@ const { statusErrors } = require('../../utils/statusErrors');
 async function createComment(req, res, next) {
   try {
     const { TaskID, Content } = req.body;
-    const UserID = req.UserID;
-
+    const UserID = req.userID;
+   
     // Check if task exists
     const task = await Task.findByPk(TaskID);
     if (!task) {
@@ -40,7 +40,7 @@ async function getCommentsByTask(req, res, next) {
 
     const comments = await Comment.findAll({ where: { TaskID: TaskID } });
 
-    res.status(200).json(Result.success(comments));
+    res.status(200).json(Result.success(200,comments));
   } catch (error) {
     next(error);
   }
@@ -50,10 +50,11 @@ async function getCommentsByTask(req, res, next) {
 // Delete a comment
 async function deleteComment(req, res, next) {
   try {
-    const { TaskID } = req.params;
-    const UserID = req.UserID;
+    const UserID = req.userID;
+    const {id} = req.body;
 
-    const comment = await Comment.findByPk(TaskID);
+
+    const comment = await Comment.findByPk(id);
 
     if (!comment) {
       return res.status(404).json(Result.error(statusErrors.NOT_FOUND));

@@ -7,20 +7,8 @@ const createNotificationValidation = celebrate({
   })
 });
 
-const markAsReadValidation = celebrate({
-  [Segments.PARAMS]: Joi.object().keys({
-    id: Joi.number().required()
-  })
-});
 
-const deleteNotificationValidation = celebrate({
-  [Segments.PARAMS]: Joi.object().keys({
-    id: Joi.number().required()
-  })
-});
 
 module.exports = {
   createNotificationValidation,
-  markAsReadValidation,
-  deleteNotificationValidation
 };

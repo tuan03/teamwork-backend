@@ -49,8 +49,8 @@ CREATE TABLE `accounts` (
 
 CREATE TABLE `comments` (
   `CommentID` int(11) NOT NULL,
-  `TaskID` int(11) DEFAULT NULL,
-  `UserID` int(11) DEFAULT NULL,
+  `TaskID` int(11) not NULL,
+  `UserID` int(11) not NULL,
   `Content` text NOT NULL,
   `CreatedAt` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -90,7 +90,7 @@ CREATE TABLE `projects` (
 
 CREATE TABLE `pushnotifications` (
   `NotificationID` int(11) NOT NULL,
-  `ReceiverID` int(11) DEFAULT NULL,
+  `ReceiverID` int(11) not NULL,
   `Content` text NOT NULL,
   `CreatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `IsRead` tinyint(1) DEFAULT 0

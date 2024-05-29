@@ -14,6 +14,6 @@ router.post('/', createCommentValidation,checkProjectAccess(['Admin','Mod','Memb
 router.get('/task/:TaskID',checkProjectAccess(['Admin','Mod','Member']), commentController.getCommentsByTask);
 
 // Delete a comment
-router.delete('/:TaskID', deleteCommentValidation,checkProjectAccess(['Admin','Mod','Member']), commentController.deleteComment);
+router.delete('/',deleteCommentValidation, commentController.deleteComment);
 
 module.exports = router;

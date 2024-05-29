@@ -11,11 +11,11 @@ const Comment = sequelize.define('Comment', {
   },
   TaskID: {
     type: DataTypes.INTEGER,
-    allowNull: true
+    allowNull: false
   },
   UserID: {
     type: DataTypes.INTEGER,
-    allowNull: true
+    allowNull: false
   },
   Content: {
     type: DataTypes.TEXT,

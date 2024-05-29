@@ -12,7 +12,7 @@ async function createNotification(req, res, next) {
       Content
     });
 
-    res.status(201).json(Result.success(newNotification));
+    res.status(201).json(Result.success(201,newNotification));
   } catch (error) {
     next(Result.error(statusErrors.INTERNAL_SERVER_ERROR, error.message));
   }
@@ -23,56 +23,19 @@ async function getNotifications(req, res, next) {
   try {
     const { userId } = req.params;
 
-    const notifications = await Notification.findAll({ where: { ReceiverID: userId } });
+    const notifications = await Notification.findAll({ attributes: { exclude: ['IsRead'] }, where: { ReceiverID: userId } });
+    await Notification.update({ IsRead: true }, { where: { ReceiverID: userId } });
 
-    res.status(200).json(Result.success(notifications));
+    res.status(200).json(Result.success(200,notifications));
   } catch (error) {
     next(Result.error(statusErrors.INTERNAL_SERVER_ERROR, error.message));
   }
 }
 
-// Mark a notification as read
-async function markAsRead(req, res, next) {
-  try {
-    const { id } = req.params;
 
-    const notification = await Notification.findByPk(id);
 
-    if (!notification) {
-      return res.status(404).json(Result.error(statusErrors.NOT_FOUND));
-    }
-
-    notification.IsRead = true;
-    await notification.save();
-
-    res.status(200).json(Result.success(notification));
-  } catch (error) {
-    next(Result.error(statusErrors.INTERNAL_SERVER_ERROR, error.message));
-  }
-}
-
-// Delete a notification
-async function deleteNotification(req, res, next) {
-  try {
-    const { id } = req.params;
-
-    const notification = await Notification.findByPk(id);
-
-    if (!notification) {
-      return res.status(404).json(Result.error(statusErrors.NOT_FOUND));
-    }
-
-    await notification.destroy();
-
-    res.status(200).json(Result.success('Notification deleted successfully'));
-  } catch (error) {
-    next(Result.error(statusErrors.INTERNAL_SERVER_ERROR, error.message));
-  }
-}
 
 module.exports = {
   createNotification,
   getNotifications,
-  markAsRead,
-  deleteNotification
 };

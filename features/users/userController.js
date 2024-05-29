@@ -37,7 +37,7 @@ async function loginUser(req, res,next) {
                 BirthDay: user.BirthDay,
                 Email: user.Email,
                 Information: user.Information,
-                Avatar: user.Avatar
+                Avatar: process.env.DOMAIN +"/"+ user.Avatar
             }));
         } else {
             const user = await userModel.findOne({ where: { UserName: req.body.Username, PasswordHash: req.body.PasswordHash } });
@@ -48,7 +48,7 @@ async function loginUser(req, res,next) {
                 BirthDay: user.BirthDay,
                 Email: user.Email,
                 Information: user.Information,
-                Avatar: user.Avatar
+                Avatar: process.env.DOMAIN +"/"+ user.Avatar
             }));
         }
     } catch (error) {

@@ -1,9 +1,10 @@
 const { celebrate, Joi, Segments } = require('celebrate');
+const User = require('../../models/userModel');
 
 const createCommentValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({
     TaskID: Joi.number().required(),
-    Content: Joi.string().required()
+    Content: Joi.string().required(),
   })
 });
 
@@ -14,7 +15,7 @@ const updateCommentValidation = celebrate({
 });
 
 const deleteCommentValidation = celebrate({
-  [Segments.PARAMS]: Joi.object().keys({
+  [Segments.BODY]: Joi.object().keys({
     id: Joi.number().required()
   })
 });
