@@ -1,10 +1,11 @@
 const express = require('express');
-const { checkLogin,registerUser,loginUser,logoutUser,updateUser,sendOTP,confirmOTP,changePasswordfoget,changePassword,changeAvatar,setDefaultAvatar} = require('./userController');
+const { checkLogin,registerUser,loginUser,logoutUser,updateUser,sendOTP,confirmOTP,changePasswordfoget,changePassword,changeAvatar,setDefaultAvatar,getInfo} = require('./userController');
 const { createUserValidation,loginValidation, updateUserValidation, forgetPasswordValidation, changePasswordForgetValidation,changePasswordValidation} = require('./userValidations');
 const router = express.Router();
 const upload = require('../../utils/uploadImage');
 const authenticateUser = require('../../middlewares/authen');
 // đăng nhập, đăng kí, quên mật khẩu, đăng xuất
+router.get('/info/:UserID',authenticateUser,getInfo);
 router.get('/checkLogin',authenticateUser,checkLogin);
 router.post('/register', createUserValidation, registerUser);
 router.post('/login',loginValidation,loginUser);

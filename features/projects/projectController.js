@@ -3,7 +3,9 @@ const Result = require("../../utils/result");
 const Member = require('../../models/memberModel');
 const { statusErrors } = require('../../utils/statusErrors');
 const sequelize = require('../../utils/db');
-
+const { Sequelize, DataTypes } = require('sequelize');
+const Task = require('../../models/taskModel');
+const User = require('../../models/userModel');
 async function createProject(req, res, next) {
   try {
     const newProject = await Project.create(req.body);
@@ -112,9 +114,55 @@ async function updateProject(req, res, next) {
 //   }
 // }
 
+async function getProjectMembersAndTasks(req,res,next){
+  try {
+
+    const {ProjectID} = req.params
+    const projectMembers = await Member.findAll({
+      where: { ProjectID: ProjectID },
+      include:[
+        {
+        model: User,
+        attributes: ['Avatar', 'FullName']
+        }
+      ],
+      raw: true
+    });
+    console.log(projectMembers)
+    const projectTasks = await Task.findAll({
+      where: { ProjectID: ProjectID },
+      include:[{
+        model:User,
+        as:'UserCreator',
+        attributes: ['Avatar', 'FullName']
+      }],
+      raw: true
+    });
+    console.log(projectTasks)
+    
+    // Tạo một đối tượng để lưu trữ các thành viên và các task của họ
+    let membersWithTasks = [];
+    
+    // Duyệt qua từng thành viên
+    for (let member of projectMembers) {
+      // Lọc ra các task thuộc về thành viên này
+      let memberTasks = projectTasks.filter(task => task.AssigneeID === member.UserID);
+      
+      // Thêm thành viên và các task của họ vào đối tượng
+      membersWithTasks.push({...member,tasks:memberTasks})
+    }
+    
+    // if (updatedRows === 1) {
+    res.status(200).json(Result.success(200,membersWithTasks));
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   createProject,
   getAllProjects,
   getProjectById,
-  updateProject
+  updateProject,
+  getProjectMembersAndTasks
 };

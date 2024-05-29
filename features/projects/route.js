@@ -20,6 +20,6 @@ router.put('/edit',authenticateUser, updateProjectValidation, checkProjectAccess
 // Delete project
 // router.delete('/:id',authenticateUser, projectController.deleteProject);
 
-
+router.get('/:ProjectID/members',projectController.getProjectMembersAndTasks)
 
 module.exports = router;

@@ -11,6 +11,25 @@ async function checkLogin(req,res,next){
     res.json(Result.success(204,null,"Đã xác thực người dùng"))
 }
 
+async function getInfo(req,res,next){
+    try{
+        const user = await userModel.findOne({ where: { UserID: req.params.UserID}});
+        if(!user){
+            next(Result.error(statusErrors.NOT_FOUND))
+        }
+
+        return res.status(200).json(Result.success(200,{
+            UserID: user.UserID,
+            FullName: user.FullName,
+            BirthDay: user.BirthDay,
+            Email: user.Email,
+            Avatar: user.Avatar
+        }))
+    } catch(e){
+        next(e)
+    }
+}
+
 // Function for user registration
 async function registerUser(req, res,next) {
     try {
@@ -271,5 +290,6 @@ module.exports = {
     changePassword,
     changeAvatar,
     setDefaultAvatar,
-    checkLogin
+    checkLogin,
+    getInfo
 };
