@@ -4,6 +4,25 @@ const User = require('../../models/userModel');
 const Result = require('../../utils/result');
 const { statusErrors } = require('../../utils/statusErrors');
 
+async function getMember(req,res,next){
+  try{
+    const {ProjectID} = req.params
+    const projectMembers = await Member.findAll({
+      where: { ProjectID: ProjectID },
+      include:[
+        {
+        model: User,
+        attributes: ['Avatar', 'FullName']
+        }
+      ],
+      raw: true
+    });
+    res.status(200).json(Result.success(200,projectMembers));
+  } catch(e){
+    next(e)
+  }
+}
+
 // Add a new member to a project
 async function addMember(req, res, next) {
   try {
@@ -15,7 +34,7 @@ async function addMember(req, res, next) {
     }
 
     const newMember = await Member.create({ ProjectID, UserID, Role });
-    res.status(201).json(Result.success(200,newMember));
+    res.status(201).json(Result.success(201,newMember));
   } catch (error) {
     next(error);
   }
@@ -59,5 +78,6 @@ async function updateMemberRole(req, res, next) {
 module.exports = {
   addMember,
   removeMember,
-  updateMemberRole
+  updateMemberRole,
+  getMember
 };

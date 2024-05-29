@@ -8,6 +8,8 @@ const checkProjectAccess = require('../../middlewares/checkProjectAccess');
 // Middleware for user authentication
 router.use(authenticateUser);
 
+router.get('/:ProjectID',checkProjectAccess(['Admin','Mod','Member']), memberController.getMember);
+
 // Add a new member to a project
 router.post('/add', addMemberValidation, checkProjectAccess(['Admin']), memberController.addMember);
 

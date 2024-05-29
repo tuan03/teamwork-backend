@@ -23,7 +23,8 @@ async function getInfo(req,res,next){
             FullName: user.FullName,
             BirthDay: user.BirthDay,
             Email: user.Email,
-            Avatar: user.Avatar
+            Avatar: user.Avatar,
+            Information: user.Information
         }))
     } catch(e){
         next(e)
@@ -68,7 +69,7 @@ async function loginUser(req, res,next) {
                 BirthDay: user.BirthDay,
                 Email: user.Email,
                 Information: user.Information,
-                Avatar: process.env.DOMAIN +"/"+ user.Avatar
+                Avatar: user.Avatar
             }));
         } else {
             const user = await userModel.findOne({ where: { UserName: req.body.Username, PasswordHash: req.body.PasswordHash     } });
@@ -79,7 +80,7 @@ async function loginUser(req, res,next) {
                 BirthDay: user.BirthDay,
                 Email: user.Email,
                 Information: user.Information,
-                Avatar: process.env.DOMAIN +"/"+ user.Avatar
+                Avatar: user.Avatar
             }));
         }
     } catch (error) {
