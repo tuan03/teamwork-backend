@@ -6,6 +6,9 @@ const isValidEmail = require('../../utils/checkEmail');
 const generateRandomNumber = require('../../utils/generateRandomNumber');
 const sendEmail = require('../../utils/sendEmail');
 
+async function checkLogin(req,res,next){
+    res.json(Result.success(204,null,"Đã xác thực người dùng"))
+}
 
 // Function for user registration
 async function registerUser(req, res,next) {
@@ -17,7 +20,7 @@ async function registerUser(req, res,next) {
         res.status(201).json(Result.success(201));
 
     } catch (error) {
-        next(Result.error(statusErrors.DATA_CONFLICT,))
+        next(Result.error(statusErrors.DATA_CONFLICT))
     }
 }
 
@@ -53,7 +56,7 @@ async function logoutUser(req, res,next, err) {
         });
 
     } catch (error) {
-        next(Result.error(statusErrors.INTERNAL_SERVER_ERROR))
+        next(error)
     }
 }
 
@@ -83,7 +86,7 @@ async function updateUser(req, res,next) {
             next(Result.error(statusErrors.DATA_CONFLICT))
         }
     } catch (error) {
-        next(Result.error(statusErrors.INTERNAL_SERVER_ERROR))
+        next(error)
     }
 }
 
@@ -105,7 +108,7 @@ async function sendOTP(req, res,next){
         );
         if(sendEmail(req.body.Email, OTP)){
             // Không gửi được email
-            next(Result.error(statusErrors.INTERNAL_SERVER_ERROR))
+            next(error)
         }else{
             req.session.Email = req.body.Email;
             // Gửi email thành công
@@ -136,7 +139,7 @@ async function confirmOTP(req, res,next){
         }
     } catch (error) {
         console.log(error)
-        next(Result.error(statusErrors.INTERNAL_SERVER_ERROR))
+        next(error)
     }
 }
 
@@ -155,7 +158,7 @@ async function changePasswordfoget(req, res,next){
         );
         res.status(200).json(Result.success(200));
     } catch (error) {
-        next(Result.error(statusErrors.INTERNAL_SERVER_ERROR))
+        next(error)
     }
 }
 
@@ -181,7 +184,7 @@ async function changePassword(req, res,next){
         
         
     } catch (error) {
-        next(Result.error(statusErrors.INTERNAL_SERVER_ERROR))
+        next(error)
     }
 }
 
@@ -243,4 +246,5 @@ module.exports = {
     changePassword,
     changeAvatar,
     setDefaultAvatar,
+    checkLogin
 };

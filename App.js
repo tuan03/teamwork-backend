@@ -19,6 +19,7 @@ require('./utils/db').authenticate()
 app.use(require('./middlewares/logger'));
 app.use(require('./config/cors'));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cookieParser())
 //middleware
 
@@ -31,7 +32,11 @@ app.use(session({
 }));
 //session
 
-
+// const checkProjectAccess = require("./middlewares/checkProjectAccess")
+// const authen = require("./middlewares/authen")
+// app.post('/dev',authen,checkProjectAccess(['Admin','Mod']),(req,res)=>{
+//   res.send("Thành Công")
+// })
 
 //test session
 app.get('/set-session-test', (req, res) => {
@@ -39,14 +44,16 @@ app.get('/set-session-test', (req, res) => {
   res.send('Session set!');
 });
 
+app.get('/api/abc',(req,res,next)=>{
+  return res.json(Result.success(200,['a','b']))
+})
+
 app.get('/get-session-test', (req, res) => {
-  const user = req.session.user || 'Guest';
   console.log(req.sessionID)
-  ap.x
-  res.send(`Hello, ${user}!`);
+
+  res.send(`Hello`);
 });
 //end test session
-
 
 //routes
 const registerRoutes = require("./utils/registerRoutes");

@@ -1,10 +1,16 @@
+const Result = require("../utils/result");
+const { statusErrors } = require("../utils/statusErrors");
+
+
 const authenticateUser = (req, res, next) => {
-    if (req.session && req.session.user) {
+    if (req.session && req.session.UserID) {
         // Nếu người dùng đã đăng nhập, cho phép tiếp tục
+        req.userID = req.session.UserID
+        console.log("Người dùng:",req.userID)
         next();
     } else {
         // Nếu không, chuyển hướng đến trang đăng nhập
-        res.redirect('/login');
+        next(Result.error(statusErrors.UNAUTHORIZED))
     }
 };
 

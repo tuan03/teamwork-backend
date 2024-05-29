@@ -104,12 +104,12 @@ CREATE TABLE `pushnotifications` (
 
 CREATE TABLE `tasks` (
   `TaskID` int(11) NOT NULL,
-  `ProjectID` int(11) DEFAULT NULL,
+  `ProjectID` int(11) NOT NULL,
   `TaskName` varchar(100) NOT NULL,
   `TaskDescription` text DEFAULT NULL,
   `Deadline` datetime DEFAULT NULL,
   `AssigneeID` int(11) DEFAULT NULL,
-  `CreatorID` int(11) DEFAULT NULL,
+  `CreatorID` int(11) NOT NULL,
   `Completed` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
