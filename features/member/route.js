@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const memberController = require('./memberController');
-const { addMemberValidation, removeMemberValidation, updateMemberRoleValidation } = require('./memberValidations');
+const { addMemberValidation, removeMemberValidation, updateMemberRoleValidation, addMemberValidation1 } = require('./memberValidations');
 const authenticateUser = require('../../middlewares/authen');
 const checkProjectAccess = require('../../middlewares/checkProjectAccess');
 
@@ -12,6 +12,9 @@ router.get('/:ProjectID',checkProjectAccess(['Admin','Mod','Member']), memberCon
 
 // Add a new member to a project
 router.post('/add', addMemberValidation, checkProjectAccess(['Admin']), memberController.addMember);
+
+// add member by username
+router.post('/addByUsername',addMemberValidation1, checkProjectAccess(['Admin']), memberController.addMemberByUsername);
 
 // Remove a member from a project
 router.delete('/remove', removeMemberValidation, checkProjectAccess(['Admin']), memberController.removeMember);

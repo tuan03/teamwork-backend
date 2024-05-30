@@ -75,9 +75,32 @@ async function updateMemberRole(req, res, next) {
   }
 }
 
+async function addMemberByUsername(req, res, next) {
+  try {
+    const { ProjectID, Username, Role } = req.body;
+    const user = await User.findOne({ where: { Username } });
+    if (!user) {
+      return next(Result.error(statusErrors.NOT_FOUND, 'User not found'));
+    }
+
+    const existingMember = await Member.findOne({ where: { ProjectID, UserID: user.UserID } });
+
+    if (existingMember) {
+      return next(Result.error(statusErrors.DATA_CONFLICT, 'User is already a member of this project'));
+    }
+
+    const newMember = await Member.create({ ProjectID, UserID: user.UserID, Role });
+    res.status(201).json(Result.success(201,newMember));
+  } catch (error) {
+    next(error);
+  }
+
+}
+
 module.exports = {
   addMember,
   removeMember,
   updateMemberRole,
-  getMember
+  getMember,
+  addMemberByUsername,
 };

@@ -8,6 +8,14 @@ const addMemberValidation = celebrate({
   })
 });
 
+const addMemberValidation1 = celebrate({
+  [Segments.BODY]: Joi.object().keys({
+    ProjectID: Joi.number().required(),
+    Username: Joi.string().required(),
+    Role: Joi.string().valid('Member', 'Mod', 'Admin').required()
+  })
+});
+
 const removeMemberValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({
     ProjectID: Joi.number().required(),
@@ -26,5 +34,6 @@ const updateMemberRoleValidation = celebrate({
 module.exports = {
   addMemberValidation,
   removeMemberValidation,
-  updateMemberRoleValidation
+  updateMemberRoleValidation,
+  addMemberValidation1
 };
