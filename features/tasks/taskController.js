@@ -148,4 +148,5 @@ module.exports = {
   getAllUncompletedTasks,
   getCompletedTaskCount,
   getMyTasks,
+  getAllMyTasks,
 };

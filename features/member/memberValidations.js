@@ -4,7 +4,7 @@ const addMemberValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({
     ProjectID: Joi.number().required(),
     UserID: Joi.number().required(),
-    Role: Joi.string().valid('Member', 'Mod', 'Admin').required()
+    Role: Joi.string().valid('Member', 'Mod', 'Admin')
   })
 });
 
@@ -12,7 +12,7 @@ const addMemberValidation1 = celebrate({
   [Segments.BODY]: Joi.object().keys({
     ProjectID: Joi.number().required(),
     Username: Joi.string().required(),
-    Role: Joi.string().valid('Member', 'Mod', 'Admin').required()
+    Role: Joi.string().valid('Member', 'Mod', 'Admin')
   })
 });
 
