@@ -16,14 +16,14 @@ router.patch('/changePasswordForget',changePasswordForgetValidation,changePasswo
 router.get('/logout',logoutUser);
 
 //thay đổi thông tin cá nhân
-router.patch('/updateInforUser',updateUserValidation, updateUser);
+router.patch('/updateInforUser',authenticateUser,updateUserValidation, updateUser);
 
 // Thay đổi mật khẩu
-router.patch('/changePassword', changePasswordValidation, changePassword);
+router.patch('/changePassword',authenticateUser, changePasswordValidation, changePassword);
 
 // Thay đổi ảnh đại diện
-router.post('/changeAvatar',upload.single('image'),changeAvatar);
+router.post('/changeAvatar',authenticateUser,upload.single('image'),changeAvatar);
 // Xóa ảnh đại diện
-router.post('/setDefaultAvatar',setDefaultAvatar)
+router.post('/setDefaultAvatar',authenticateUser,setDefaultAvatar)
 
 module.exports = router;

@@ -13,6 +13,16 @@ async function createTask(req, res, next) {
     next(error);
   }
 }
+async function getAllMyTasks(req,res,next){
+  try {
+    const tasks = await Task.findAll({
+      where: { AssigneeID: req.userID },
+    });
+    res.status(200).json(Result.success(200, tasks));
+  } catch (error) {
+    next(error);
+  }
+}
 async function getAllTasks(req, res, next) {
   try {
     const tasks = await Task.findAll({
