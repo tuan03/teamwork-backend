@@ -11,6 +11,10 @@ router.use(authenticateUser);
 router.post('/', createTaskValidation,checkProjectAccess(['Admin','Mod']), taskController.createTask);
 
 // Lấy all Task
+router.get('/', taskController.getAllMyTasks);
+
+
+// Lấy all Task
 router.get('/:ProjectID/all',checkProjectAccess(['Admin','Mod','Member']), taskController.getAllTasks);
 
 // Lấy thông tin task bằng ID

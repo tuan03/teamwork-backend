@@ -24,7 +24,8 @@ async function getInfo(req,res,next){
             BirthDay: user.BirthDay,
             Email: user.Email,
             Avatar: user.Avatar,
-            Information: user.Information
+            Information: user.Information,
+            YourID: req.userID
         }))
     } catch(e){
         next(e)
@@ -50,7 +51,7 @@ async function registerUser(req, res,next) {
         res.status(201).json(Result.success(201));
 
     } catch (error) {
-        next(Result.error(statusErrors.DATA_CONFLICT))
+        next(Result.error(statusErrors.DATA_CONFLICT,"Tài khoản hoặc Email đã tồn tại"))
     }
 }
 
@@ -89,12 +90,13 @@ async function loginUser(req, res,next) {
 }
 
 // Function for user logout
-async function logoutUser(req, res,next, err) {
+async function logoutUser(req, res,next) {
     try {
         
         // Xóa thông tin người dùng từ session
         req.session.destroy(err => {
             if (err) {
+                console.error(err)
                 next(Result.error(err))
             } else {
                 res.status(200).json(Result.success(200));
@@ -122,7 +124,7 @@ async function updateUser(req, res,next) {
                 },
                 {
                     where:{
-                        UserID: req.session.UserID
+                        UserID: req.userID
                     }
                 }  
             );
